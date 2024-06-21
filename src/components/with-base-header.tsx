@@ -1,24 +1,16 @@
 "use client";
 
-import { api } from "@/constants/api";
-import { request } from "@/lib/axios";
-import React, { useEffect } from "react";
+import { useGetCategoryByPage } from "@/hooks/apis/use-get-header-data";
+import React from "react";
 
 function WithBaseHeader() {
-  const getHeaderData = async () => {
-    await request({
-      method: "GET",
-      url: api.LIST_CATEGORY_BY_PAGE,
-      params: {
-        page: "book_retail",
-      },
-    });
-  };
+  const { data } = useGetCategoryByPage({
+    initQueryParams: {
+      page: "book_retail",
+    },
+  });
 
-  useEffect(() => {
-    // getHeaderData();
-    fetch("/api/list-category-by-page");
-  }, []);
+  console.log({ data });
 
   return <div>WithBaseHeader</div>;
 }
