@@ -68,6 +68,7 @@ export class HttpClient {
     }
 
     const protocol = url.startsWith("http:") ? http : https;
+
     return new Promise((resolve, reject) => {
       try {
         const request = protocol.request(url, options, (res) => {
@@ -123,6 +124,13 @@ export class HttpClient {
     }
   }
 
+  public async get<T>(
+    path: string,
+    body: T,
+    options: RequestOptions<T> = { method: "GET" },
+  ) {
+    return this.send<T>("GET", path, options, body);
+  }
   public async post<T>(
     path: string,
     body: T,
@@ -151,3 +159,7 @@ export class HttpClient {
     return this.send<T>("DELETE", path, options);
   }
 }
+
+const httpClient = new HttpClient(process.env.NEXT_PUBLIC_API_URL);
+
+export default httpClient;

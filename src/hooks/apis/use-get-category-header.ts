@@ -1,9 +1,9 @@
-import { api } from "@/constants/api";
 import { BaseResponse } from "@/interfaces/request";
-import { request } from "@/lib/axios";
+import { request } from "@/lib/request";
 import { QueryConfig } from "@/lib/tanstack-query";
 import { useQueryParams } from "../use-query-params.hook";
 import { QueryKey, useQuery } from "@tanstack/react-query";
+import { api } from "@/constants/api";
 
 type QueryCategoryByPage = {
   page?: "ebook" | "fm_audio_book" | "podcast" | "book_retail";
@@ -44,15 +44,16 @@ type ApiResponse = {
   };
 };
 
-export async function getCategoryByPage(
+const getCategoryByPage = (
   params: QueryCategoryByPage,
-): Promise<BaseResponse<ApiResponse>> {
+): Promise<BaseResponse<ApiResponse>> => {
   return request({
+    // url: "/super/listCategoryByPage",
     url: api.LIST_CATEGORY_BY_PAGE,
     method: "GET",
     params,
   });
-}
+};
 
 export const useGetCategoryByPage = ({
   configs,

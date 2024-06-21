@@ -10,6 +10,6 @@ export type GetDeepProp<T extends object, K extends string> = K extends keyof T
 
 export type BaseResponse<T> = {
   code: number;
-  message: string;
+  message?: string;
   data: T;
 };

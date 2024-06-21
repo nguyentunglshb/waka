@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetCategoryByPage } from "@/hooks/apis/use-get-header-data";
+import { useGetCategoryByPage } from "@/hooks/apis/use-get-category-header";
 import React from "react";
 
 function WithBaseHeader() {
@@ -10,7 +10,7 @@ function WithBaseHeader() {
     },
   });
 
-  console.log({ data });
+  console.log(data);
 
   return <div>WithBaseHeader</div>;
 }
