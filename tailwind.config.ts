@@ -28,6 +28,10 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        dark: {
+          overlay: "rgba(18, 18, 20, 0.8)",
+        },
+        "white-overlay": "rgba(255, 255, 255, 0.1)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
