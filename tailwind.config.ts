@@ -26,7 +26,7 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: "#121214",
         foreground: "hsl(var(--foreground))",
         dark: {
           overlay: "rgba(18, 18, 20, 0.8)",

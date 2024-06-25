@@ -11,8 +11,12 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
-import Link from "next/link";
+import Image from "next/image";
 import { twMerge } from "tailwind-merge";
+import logo from "@/../public/images/logo.png";
+import { Button, buttonVariants } from "./ui/button";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Item = {
   title: string;
@@ -48,23 +52,48 @@ const menu: Array<Item> = [
 ];
 
 function WithBaseHeader() {
+  const router = useRouter();
+
   return (
-    <NavigationMenu>
+    <NavigationMenu className="fixed left-0 top-0 w-full max-w-none justify-between bg-gradient-to-b from-[rgba(18,18,20,0.68)] to-[rgba(0,0,0,0)] px-14 py-5">
       <NavigationMenuList>
-        {menu.map((item, index) => (
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/">
+            <Image
+              src={logo}
+              alt="logo"
+              width={106}
+              height={60}
+              className="mr-4 h-7 w-auto object-contain"
+              priority
+            />
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        {menu.map((item) => (
           <MenuItemCategory
             key={item.title}
             title={item.title}
             page={item?.page}
           />
         ))}
-        {/* <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
-            </NavigationMenuLink>
+      </NavigationMenuList>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <Link
+            href="/sign-up"
+            className={buttonVariants({ variant: "secondary" })}
+          >
+            Đăng ký
           </Link>
-        </NavigationMenuItem> */}
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link
+            href="/sign-in"
+            className={buttonVariants({ variant: "primary" })}
+          >
+            Đăng nhập
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -88,11 +117,9 @@ const MenuItemCategory = ({
     },
   });
 
-  console.log({ data });
-
   return page ? (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="text-base font-medium hover:text-green-500 focus:text-green-500">
+      <NavigationMenuTrigger className="bg-transparent text-base font-medium text-white hover:!bg-transparent hover:text-green-500 focus:text-green-500">
         {title}
       </NavigationMenuTrigger>
       {data && (
@@ -102,7 +129,7 @@ const MenuItemCategory = ({
               {data?.data.category.list.map((item) => (
                 <div
                   key={item.id}
-                  className="hover:bg-white-overlay rounded-xl px-3 py-2 text-sm font-normal text-white"
+                  className="rounded-xl px-3 py-2 text-sm font-normal text-white hover:bg-white-overlay"
                 >
                   {item.name}
                 </div>
@@ -114,7 +141,7 @@ const MenuItemCategory = ({
                 {data?.data.more.list.map((item) => (
                   <div
                     key={item.name}
-                    className="bg-white-overlay rounded-xl px-3 py-2 text-sm font-normal text-white"
+                    className="rounded-xl bg-white-overlay px-3 py-2 text-sm font-normal text-white"
                   >
                     {item.name}
                   </div>
@@ -126,11 +153,11 @@ const MenuItemCategory = ({
       )}
     </NavigationMenuItem>
   ) : (
-    <NavigationMenuItem>
+    <NavigationMenuItem className="cursor-pointer">
       <NavigationMenuLink
         className={twMerge(
           navigationMenuTriggerStyle(),
-          "text-base font-medium hover:text-green-500 focus:text-green-500",
+          "hover:bg-transparent! bg-transparent text-base font-medium text-white hover:text-green-500 focus:text-green-500",
         )}
       >
         {title}

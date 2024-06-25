@@ -41,7 +41,6 @@ const request = async <
 
   let token = MD5(tokenMd5.toString());
 
-  let secureCode = createSign(url, data as any, token);
   const id = generateDeviceId();
 
   configs.url = urlRequest[url];
@@ -49,26 +48,36 @@ const request = async <
   switch (method) {
     case "get":
     case "GET": {
-      secureCode = createSign(url, params, token);
-
-      params["secure_code"] = secureCode;
       params["account"] = account;
       params["os"] = os;
       params["id"] = id;
 
+      const secureCode = createSign(url, params, token);
+
+      params["secure_code"] = secureCode;
       break;
     }
     case "post":
     case "POST": {
-      (data as Record<string, unknown>)["secure_code"] = secureCode;
       (data as Record<string, unknown>)["account"] = account;
       (data as Record<string, unknown>)["os"] = os;
       (data as Record<string, unknown>)["id"] = id;
+
+      const secureCode = createSign(url, data as any, token);
+
+      (data as Record<string, unknown>)["secure_code"] = secureCode;
       break;
     }
   }
 
   const onSuccess = (response: Res<TDataResponse>) => {
+    if (response?.code === 101) {
+      return Promise.reject({
+        ...response?.data,
+        statusCode: response?.code,
+      });
+    }
+
     return {
       ...response,
       statusCode: response?.code,
