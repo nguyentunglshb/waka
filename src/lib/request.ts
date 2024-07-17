@@ -37,9 +37,9 @@ const request = async <
   const account = user && user?.userId ? user?.userId : "guest";
   const data = configs.data;
   const params = configs.params || {};
-  const tokenMd5 = (data as any)?.account || account;
+  // const tokenMd5 =  (data as any)?.account || account;
 
-  let token = MD5(tokenMd5.toString());
+  // let token = MD5(tokenMd5.toString());
 
   const id = generateDeviceId();
 
@@ -48,7 +48,10 @@ const request = async <
   switch (method) {
     case "get":
     case "GET": {
-      params["account"] = account;
+      const tokenMd5 = (params as any)?.account || account;
+      let token = MD5(tokenMd5.toString());
+
+      params["account"] = tokenMd5;
       params["os"] = os;
       params["id"] = id;
 
@@ -59,6 +62,9 @@ const request = async <
     }
     case "post":
     case "POST": {
+      const tokenMd5 = (data as any)?.account || account;
+      let token = MD5(tokenMd5.toString());
+
       (data as Record<string, unknown>)["account"] = account;
       (data as Record<string, unknown>)["os"] = os;
       (data as Record<string, unknown>)["id"] = id;

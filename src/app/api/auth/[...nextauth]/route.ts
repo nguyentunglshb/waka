@@ -1,10 +1,16 @@
 import { AuthOptions } from "next-auth";
 import NextAuth, { getServerSession } from "next-auth/next";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "sign-in",
+  },
   providers: [
-    CredentialsProvider({
+    Credentials({
       name: "Credentials",
       credentials: {
         username: {
@@ -18,6 +24,8 @@ export const authOptions: AuthOptions = {
         },
       },
       async authorize(credentials, req) {
+        console.log(req.body);
+
         // Add logic here to look up the user from the credentials supplied
         const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
 
@@ -31,14 +39,19 @@ export const authOptions: AuthOptions = {
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       },
+      // async authorize({ request }) {
+      //   const response = await fetch(request)
+      //   if (!response.ok) return null
+      //   return (await response.json()) ?? null
+      // },
     }),
   ],
 };
 
-// export default NextAuth(authOptions);
+export default NextAuth(authOptions);
 
-const handler = NextAuth(authOptions);
+const handlers = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export { handlers as GET, handlers as POST };
 
 export const getAuthSession = () => getServerSession(authOptions);

@@ -28,6 +28,7 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "#121214",
         foreground: "hsl(var(--foreground))",
+        main: "#15B088",
         dark: {
           overlay: "rgba(18, 18, 20, 0.8)",
         },
@@ -79,6 +80,9 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      flex: {
+        "flex-1": "flex 1 1 0%",
       },
     },
   },

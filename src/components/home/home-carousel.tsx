@@ -22,8 +22,6 @@ export const HomeCarousel: FC<HomeCarouselProps> = ({}) => {
     initQueryParams: {},
   });
 
-  console.log({ data });
-
   return (
     <Carousel
       className="w-full"
