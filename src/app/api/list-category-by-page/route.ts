@@ -1,5 +1,5 @@
 import { api } from "@/constants/api";
-import { request } from "@/lib/axios";
+import { request } from "@/lib/request";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
